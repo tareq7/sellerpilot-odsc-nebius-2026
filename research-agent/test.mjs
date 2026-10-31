@@ -37,6 +37,7 @@ test('sends untrusted source material as data, with stable evidence IDs',async()
  assert.equal(modelBody.messages[0].role,'system');
  assert.ok(modelBody.messages[1].content.includes('untrusted_source_excerpts'));
  assert.equal(result.claims.length,1);
+ assert.match(formatAnswer(result),/^- Shipping delays doubled in the supplied example\. \[1\]$/m);
  assert.match(formatAnswer(result),/https:\/\/example.com\/report/);
 });
 test('invalid citations produce insufficient evidence rather than a confident claim',()=>{
@@ -98,4 +99,22 @@ test('response-body abort is classified as provider unavailable',async()=>{
  await assert.rejects(research('What changed in shipping costs?',{
   tavilyKey:'a',nebiusKey:'b',model:'model',fetcher:async()=>({ok:true,status:200,json:async()=>{throw e}})
  }),{code:'provider_unavailable'});
+});
+
+test('rejects a claim in which any citation ID is unknown or malformed',()=>{
+ for(const ids of [[1,99],[99,1],[1,'2'],[],[1,null]]){
+  const r=parseGroundedClaims(JSON.stringify({claims:[{text:'Mixed references',source_ids:ids}]}),[{id:1}]);
+  assert.equal(r.status,'insufficient_evidence');
+  assert.equal(r.claims.length,0);
+  assert.equal(r.rejected_claim_count,1);
+ }
+ const good=parseGroundedClaims(JSON.stringify({claims:[{text:'Supported statement',source_ids:[1,1]}]}),[{id:1}]);
+ assert.deepEqual(good.claims[0].source_ids,[1]);
+});
+test('empty or whitespace-only source excerpts cannot trigger inference',async()=>{
+ const filtered=normalizeSources([{url:'https://example.com/a',title:'Empty'},{url:'https://example.com/b',content:' \t \n'}, {url:'https://example.com/c',content:'Evidence'}]);
+ assert.equal(filtered.length,1); assert.equal(filtered[0].url,'https://example.com/c');
+ let requests=0;
+ const out=await research('What did the source report?',{tavilyKey:'abc',nebiusKey:'def',model:'fake',fetcher:async()=>{requests++;return ok({results:[{url:'https://example.com/blank',content:'  '}]});}});
+ assert.equal(out.status,'insufficient_evidence'); assert.equal(requests,1);
 });
