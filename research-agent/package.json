@@ -1,0 +1,12 @@
+{
+  "name": "sellerpilot-nebius-tavily-research-agent",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test.mjs",
+    "start": "node cli.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

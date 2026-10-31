@@ -1,0 +1,21 @@
+name: ODSC Nebius Tavily agent offline verification
+on:
+  push:
+    branches: [main, feat/nebius-tavily-research-agent]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  research-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run isolated mock provider and evidence guard tests
+        run: node --test research-agent/test.mjs
+      - name: Verify inherited SellerPilot build
+        run: npm ci --ignore-scripts --no-audit --no-fund && npm test && npm run build
