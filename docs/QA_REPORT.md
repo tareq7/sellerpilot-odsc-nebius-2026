@@ -1,3 +1,5 @@
+> **ODSC × Nebius AI Research Agent Hackathon 2026 adaptation:** The content below describes an inherited Meta-era baseline, not Nebius Token Factory / Tavily behavior. For new work, see [current submission checklist](SUBMISSION_CHECKLIST.md).
+
 # Quality report — October 27, 2026
 
 ## Verified state

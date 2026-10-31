@@ -1,3 +1,5 @@
+> **ODSC × Nebius AI Research Agent Hackathon 2026 adaptation:** The content below describes an inherited Meta-era baseline, not Nebius Token Factory / Tavily behavior. For new work, see [current submission checklist](SUBMISSION_CHECKLIST.md).
+
 # Security model and explicit spending gate
 
 The public SellerPilot demo works without paid APIs, merchant login or marketplace writes. Canonicalized Amazon/Noon CSVs are analyzed locally in the user's browser. The app is not permitted to send imported private reports to the Meta **Contributor** model, because Meta may use prompts and outputs to improve its models.
