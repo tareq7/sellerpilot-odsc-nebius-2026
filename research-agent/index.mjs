@@ -53,13 +53,14 @@ export function normalizeSources(results, max = 6) {
   for (const item of results) {
     if(output.length>=max) break;
     const url=sourceIdentity(item);
-    if (!url || seen.has(url)) continue;
+    const excerpt=typeof item?.content==='string'?item.content.trim().slice(0,1300):'';
+    if (!url || !excerpt || seen.has(url)) continue;
     seen.add(url);
     output.push({
       id:output.length+1,
       title:String(item.title||'Untitled source').slice(0,160),
       url,
-      excerpt:String(item.content||'').slice(0,1300),
+      excerpt,
       published_date:typeof item.published_date==='string'?item.published_date.slice(0,35):null
     });
   }
@@ -74,7 +75,9 @@ export function parseGroundedClaims(text, sources) {
   const claims=[], rejected=[];
   for (const item of raw.claims.slice(0,12)) {
     const statement=typeof item?.text==='string'?item.text.trim().slice(0,650):'';
-    const ids=[...new Set(Array.isArray(item?.source_ids)?item.source_ids.filter(x=>Number.isInteger(x)&&validIds.has(x)):[])];
+    const citedIds=item?.source_ids;
+    const validCitations=Array.isArray(citedIds) && citedIds.length>0 && citedIds.every(x=>Number.isInteger(x)&&validIds.has(x));
+    const ids=validCitations?[...new Set(citedIds)]:[];
     if (!statement || ids.length===0) {
       rejected.push({reason:'missing or invalid cited sources'}); continue;
     }
