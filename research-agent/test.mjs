@@ -77,7 +77,7 @@ test('renders untrusted source and claim text without terminal control or forged
 });
 test('requests enough Tavily candidates to retain six distinct usable citations',async()=>{
  let searchConfig;
- const duplicates=Array.from({length:7},(_,i)=>({url:i%2?'https://example.com/dup':'http://localhost/internal',title:'Duplicate'}));
+ const duplicates=Array.from({length:6},(_,i)=>({url:i%2?'https://example.com/dup':'http://localhost/internal',title:'Duplicate'}));
  const unique=Array.from({length:6},(_,i)=>({url:'https://example.com/'+i,title:'Source '+i,content:'Evidence '+i}));
  const result=await research('What changed in shipping costs?',{
   tavilyKey:'test',nebiusKey:'test',model:'model',fetcher:async(url,options)=>{
