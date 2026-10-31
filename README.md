@@ -1,27 +1,36 @@
 # SellerPilot Research — ODSC × Nebius AI Research Agent Hackathon 2026
 
 **Event:** ODSC × Nebius AI Research Agent Hackathon 2026  
-**Status:** **Preparation only — NOT submitted; required Nebius/Tavily features are not yet implemented.**  
+**Status:** **Source-grounded Tavily + Nebius research agent implemented and offline-tested; live provider calls, judge demonstration and final submission NOT verified.**  
 **Deadline:** 20 November 2026  
 **This repo:** https://github.com/tareq7/sellerpilot-odsc-nebius-2026  
 **Prior project:** https://github.com/tareq7/sellerpilot-ai (built in October 2026 for the Meta Global AI Developer Hackathon).
 
-> This repository is an **unchanged code-history clone plus documentation and branding edits**, not a working Nebius research agent. The original marketplace analytics and Meta demonstration are legacy baseline work. Event eligibility depends on creating and testing the new source-citing research workflow, not on renaming this repo.
+> This repository retains the full history of the original Meta-era SellerPilot AI. The additional **research-agent/** subsystem is new work for ODSC 2026 and has offline mock-backed tests. It is **not** authenticated live integration proof; the hosted Meta application and video remain historical, not evidence of Nebius/Tavily functionality.
 
-## Proposed research agent
+## Implemented ODSC research agent
 
-Proposed agent: research marketplace advertising, inventory policy and seller operations with Nebius Token Factory open-model inference and Tavily source retrieval. Add a claim/source evidence ledger and confidence/uncertainty checks, while reusing SellerPilot's deterministic analysis solely as a cited calculation module. Neither required Nebius nor Tavily integration is implemented in this imported baseline.
+- [x] Call Tavily Search API for externally retrievable HTTPS evidence, deduplicate up to six nonempty excerpts, and record stable numbered source IDs.
+- [x] Call Nebius Token Factory's OpenAI-compatible chat endpoint for structured cited claims, with provider keys supplied through environment variables.
+- [x] Reject unsupported citation IDs, missing/empty source evidence, malformed responses, invalid keys, and unsafe output; keep uncertainty explicit.
+- [x] Run the offline regression suite in CI, separate from the inherited React app.
+- [ ] Verify authenticated real Tavily and Nebius calls within approved free-credit usage limits, record a true end-to-end trace.
+- [ ] Assess correctness against retrieved evidence, prepare judge demo and final ODSC submission.
 
-### Requirements before submitting
+**Agent-specific quickstart** (Node.js 20+; no external dependencies for its tests):
 
-- [ ] Build a working AI research agent that turns a question into a verifiable, source-linked answer.
-- [ ] Use Nebius Token Factory for inference on an open model, not the inherited gated Meta-only integration.
-- [ ] Use Tavily for genuine real-time web search and cite retrievable evidence.
-- [ ] Make working query→search→inference→source validation flow observable in a demo (no fabricated citations).
-- [ ] Provide a public repo, README, setup instructions and a short event-specific demo video.
-- [ ] Run tests and disclose the reused SellerPilot baseline versus newly developed research functionality.
+```sh
+cd research-agent
+node --test test.mjs
+# For a real run, provide the required keys privately in the shell;
+# check provider billing and remaining free credits first.
+export TAVILY_API_KEY='<TAVILY_KEY>'
+export NEBIUS_API_KEY='<NEBIUS_KEY>'
+export NEBIUS_MODEL='<AVAILABLE_OPEN_MODEL>'
+node cli.mjs 'What changed in online retail logistics?'
+```
 
-The pre-existing https://sellerpilot-ai-phi.vercel.app site and video do not use Nebius Token Factory or Tavily and should not be offered as evidence of this challenge's required stack.
+See [the research-agent README](research-agent/README.md) for security limits, provider endpoints and full provenance.
 
 ---
 
