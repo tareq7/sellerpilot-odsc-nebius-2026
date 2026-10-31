@@ -5,7 +5,7 @@
 
 ## Use case
 
-A merchant analyst investigates current marketplace advertising, shipping and inventory information using **live external evidence**, rather than relying on the synthetic stock data of the original SellerPilot dashboard. The agent retrieves up to six HTTPS sources using Tavily and asks an open model on Nebius Token Factory to return structured factual claims referencing those source IDs. Invalid citations are rejected. The answer prints evidence links for human review. This is source-link validation, **not independently verified textual entailment**.
+A merchant analyst investigates current marketplace advertising, shipping and inventory information using **live external evidence**, rather than relying on the synthetic stock data of the original SellerPilot dashboard. The agent requests up to twelve Tavily results, retains up to six unique HTTPS sources with nonempty excerpts, and asks an open model on Nebius Token Factory to return structured factual claims referencing those source IDs. Invalid citations are rejected. The answer prints evidence links for human review. This is source-link validation, **not independently verified textual entailment**.
 
 ## Execution
 
@@ -27,7 +27,7 @@ node cli.mjs 'What reliable recent evidence supports changes in online retail lo
 
 ### Safety and limits
 
-Search content is untrusted, never a system instruction. The model must output a JSON object with claims and source IDs; claims with unknown citations are dropped. This is a best-effort guard, **not proof of factual entailment or successful prompt-injection resistance**. Further work: automated claim/source entailment checks, live authenticated integration evidence, broad evaluation across claims and conflicts, a deployed answer UI, and a fresh demo video. A missing provider key or provider failure stops rather than outputting synthetic research. Token usage is capped per call; searches can incur provider usage fees. **Do not supply keys until free-credit/billing limits are verified**.
+Search content is untrusted, never a system instruction. The model must output a JSON object with claims and source IDs; claims containing any unknown or malformed citation IDs are dropped. This is a best-effort guard, **not proof of factual entailment or successful prompt-injection resistance**. Further work: automated claim/source entailment checks, live authenticated integration evidence, broad evaluation across claims and conflicts, a deployed answer UI, and a fresh demo video. A missing provider key or provider failure stops rather than outputting synthetic research. Token usage is capped per call; searches can incur provider usage fees. **Do not supply keys until free-credit/billing limits are verified**.
 
 ### Prior work disclosure
 
