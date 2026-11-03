@@ -1,5 +1,7 @@
 # SellerPilot Research — ODSC × Nebius AI Research Agent Hackathon 2026
 
+I built a research agent to help sellers find answers they can check. It searches with Tavily, asks Nebius to explain the results, and keeps track of the sources behind each claim. The code passes local tests, but I haven’t verified a full live run with both providers yet.
+
 **Event:** ODSC × Nebius AI Research Agent Hackathon 2026  
 **Status:** **Source-grounded Tavily + Nebius research agent implemented and offline-tested; live provider calls, judge demonstration and final submission NOT verified.**  
 **Deadline:** 20 November 2026  
