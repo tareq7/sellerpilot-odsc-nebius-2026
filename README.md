@@ -2,6 +2,7 @@
 
 I built a research agent to help sellers find answers they can check. It searches with Tavily, asks Nebius to explain the results, and keeps track of the sources behind each claim. The code passes local tests, but I haven’t verified a full live run with both providers yet.
 
+**ODSC offline walkthrough (2:24):** [Watch the new research-agent video](docs/demo/odsc-research-agent-offline-walkthrough.mp4) — mock-backed tests only; live provider calls remain unverified.  
 **Event:** ODSC × Nebius AI Research Agent Hackathon 2026  
 **Status:** **Source-grounded Tavily + Nebius research agent implemented and offline-tested; live provider calls, judge demonstration and final submission NOT verified.**  
 **Deadline:** 20 November 2026  
